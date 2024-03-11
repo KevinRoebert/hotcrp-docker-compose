@@ -99,6 +99,6 @@ services:
             - ${DOCKER_NETWORK}
 
 networks:
-    hotcrp_network:
+    ${DOCKER_NETWORK}:
     global_network:
         driver: bridge
