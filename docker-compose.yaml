@@ -35,6 +35,8 @@ services:
             SERVER_HOSTNAME: ${SERVER_HOSTNAME}
             DESTINATION_CONCURRENCY_LIMIT: "1"
             DESTINATION_RATE_DELAY: "1s"
+        networks:
+            - ${DOCKER_NETWORK}
 
 
     php:
@@ -51,26 +53,31 @@ services:
             - ./logs/php:/var/log
         environment:
             MYSQL_USER: hotcrp
-            MYSQL_PASSWORD: hotcrppwd
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: hotcrp
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             HOTCRP_PAPER_SITE: ${HOTCRP_PAPER_SITE}
             HOTCRP_CONTACT_NAME: ${HOTCRP_CONTACT_NAME}
             HOTCRP_EMAIL_CONTACT: ${HOTCRP_EMAIL_CONTACT}
             HOTCRP_EMAIL_FROM:  ${HOTCRP_EMAIL_FROM}
         depends_on:
             - smtp
+        networks:
+            - ${DOCKER_NETWORK}
     nginx:
         image: nginx:alpine
         restart: always
         ports:
-            - 9001:80
+            - "${NGINX_PORT}:80"
         volumes:
             - ./app:/srv/www/api
             - ./logs/nginx:/var/log/nginx  
             - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - php
+        networks:
+            - ${DOCKER_NETWORK}
+            - global_network
  
     mysql:
         image: mysql:8.0.26
@@ -85,7 +92,13 @@ services:
             - php
         environment:
             MYSQL_USER: hotcrp
-            MYSQL_PASSWORD: hotcrppwd
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: hotcrp
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        networks:
+            - ${DOCKER_NETWORK}
 
+networks:
+    hotcrp_network:
+    global_network:
+        driver: bridge
