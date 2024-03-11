@@ -17,8 +17,10 @@ function add_config_value() {
 if [ -n "${SMTP_PASSWORD_FILE}" ]; then [ -f "${SMTP_PASSWORD_FILE}" ] && read SMTP_PASSWORD < ${SMTP_PASSWORD_FILE} || echo "SMTP_PASSWORD_FILE defined, but file not existing, skipping."; fi
 
 [ -z "${SMTP_SERVER}" ] && echo "SMTP_SERVER is not set" && exit 1
-[ -z "${SMTP_USERNAME}" ] && echo "SMTP_USERNAME is not set" && exit 1
-[ -z "${SMTP_PASSWORD}" ] && echo "SMTP_PASSWORD is not set" && exit 1
+#[ -z "${SMTP_USERNAME}" ] && echo "SMTP_USERNAME is not set" && exit 1
+#[ -z "${SMTP_PASSWORD}" ] && echo "SMTP_PASSWORD is not set" && exit 1
+SMTP_USERNAME="${SMTP_USERNAME:-}"
+SMTP_PASSWORD="${SMTP_PASSWORD:-}"
 [ -z "${SERVER_HOSTNAME}" ] && echo "SERVER_HOSTNAME is not set" && exit 1
 
 SMTP_PORT="${SMTP_PORT:-587}"
