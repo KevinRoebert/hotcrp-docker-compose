@@ -36,7 +36,7 @@ services:
             DESTINATION_CONCURRENCY_LIMIT: "1"
             DESTINATION_RATE_DELAY: "1s"
         networks:
-            - ${DOCKER_NETWORK}
+            - hotcrp_network
 
 
     php:
@@ -63,7 +63,7 @@ services:
         depends_on:
             - smtp
         networks:
-            - ${DOCKER_NETWORK}
+            - hotcrp_network
     nginx:
         image: nginx:alpine
         restart: always
@@ -76,7 +76,7 @@ services:
         depends_on:
             - php
         networks:
-            - ${DOCKER_NETWORK}
+            - hotcrp_network
             - global_network
  
     mysql:
@@ -96,9 +96,9 @@ services:
             MYSQL_DATABASE: hotcrp
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         networks:
-            - ${DOCKER_NETWORK}
+            - hotcrp_network
 
 networks:
-    ${DOCKER_NETWORK}:
+    hotcrp_network:
     global_network:
         driver: bridge
