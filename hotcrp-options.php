@@ -209,8 +209,8 @@ $Opt["disableCapabilities"] = true;
 //   allowLocalHttp  Only meaningful if redirectToHttps is set. If true, then
 //                   HotCRP will *not* redirect HTTP connections that
 //                   originate from localhost.
-$Opt["sessionSecure"] = true;
-$Opt["redirectToHttps"] = true;
+$Opt["sessionSecure"] = false;
+$Opt["redirectToHttps"] = false;
 
 $Opt["dsn"] = "mysql://root:".$_ENV["MYSQL_ROOT_PASSWORD"]."@mysql:3306/".$_ENV["MYSQL_DATABASE"];
 // EXTERNAL SOFTWARE CONFIGURATION
